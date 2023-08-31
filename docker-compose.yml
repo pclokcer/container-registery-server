@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+
+  registry:
+    container_name: Custom_Registry
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/localhost.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/localhost.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - ./images:/var/lib/registry
+      - ./auth:/auth
+      - ./certs:/certs
